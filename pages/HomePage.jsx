@@ -11,6 +11,7 @@ import {
 import Header from "../components/Header";
 import Content from "../components/Content";
 import Sidebar from "../components/SideBar";
+import { useNavigation } from "@react-navigation/native";
 
 const { width } = Dimensions.get("window");
 const SIDEBAR_WIDTH = 220;
@@ -18,6 +19,7 @@ const SIDEBAR_WIDTH = 220;
 const HomePage = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const sidebarAnimation = useRef(new Animated.Value(-SIDEBAR_WIDTH)).current;
+  const navigate = useNavigation();
 
   const toggleSidebar = () => {
     const toValue = sidebarOpen ? -SIDEBAR_WIDTH : 0;
@@ -55,7 +57,7 @@ const HomePage = () => {
           { transform: [{ translateX: sidebarAnimation }] },
         ]}
       >
-        <Sidebar />
+        <Sidebar closeSidebar={closeSidebar} />
       </Animated.View>
       {sidebarOpen && (
         <TouchableWithoutFeedback onPress={closeSidebar}>

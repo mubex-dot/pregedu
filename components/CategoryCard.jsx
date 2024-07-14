@@ -15,9 +15,9 @@ const CategoryCard = ({ title, color, image }) => {
             <TouchableOpacity style={styles.button}>
               <Text style={styles.buttonText}>Watch</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.moreButton}>
+            {/* <TouchableOpacity style={styles.moreButton}>
               <Text style={styles.moreButtonText}>More</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
       </View>
