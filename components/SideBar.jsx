@@ -7,12 +7,18 @@ const Sidebar = ({ closeSidebar }) => {
   const navigation = useNavigation();
 
   const menuItems = [
-    { icon: "home", title: "Home Page", screen: "Home" },
-    { icon: "medical", title: "Prenatal Care", screen: "PrenatalCare" },
-    { icon: "nutrition", title: "Nutritional Tips", screen: "NutritionalTips" },
-    { icon: "woman", title: "Postpartum Care", screen: "PostpartumCare" },
-    { icon: "people", title: "Family Planning", screen: "FamilyPlanning" },
+    { icon: "home", title: "Shafin Farko", screen: "Home" },
+    { icon: "medical", title: "Kula Da Ciki", screen: "PrenatalCare" },
+    {
+      icon: "nutrition",
+      title: "Shawarwarin Abinci",
+      screen: "NutritionalTips",
+    },
+    { icon: "woman", title: "Kula Bayan Haihuwa", screen: "PostpartumCare" },
+    { icon: "people", title: "Tsarin Iyali", screen: "FamilyPlanning" },
+    { icon: "chatbubble", title: " Tattaunawa da AI", screen: "ChatPage" },
     // { icon: "settings", title: "Setting", screen: "Settings" },
+    //
     // { icon: "help-circle", title: "Help", screen: "Help" },
   ];
 

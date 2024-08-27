@@ -48,6 +48,8 @@ import NutritionalTips from "./pages/NutritionalTips";
 import PostpartumCare from "./pages/PostpartumCare";
 import FamilyPlanning from "./pages/FamilyPlanning";
 import StartPage from "./pages/StartPage";
+import RegisterPage from "./pages/RegisterPage";
+import ChatPage from "./pages/ChatPage";
 // import Settings from "./pages/Settings";
 // import Help from "./pages/Help";
 
@@ -60,6 +62,11 @@ function App() {
         <Stack.Screen
           name="Start"
           component={StartPage}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Register"
+          component={RegisterPage}
           options={{ headerShown: false }}
         />
         <Stack.Screen
@@ -85,6 +92,11 @@ function App() {
         <Stack.Screen
           name="FamilyPlanning"
           component={FamilyPlanning}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ChatPage"
+          component={ChatPage}
           options={{ headerShown: false }}
         />
         {/* <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }} /> */}

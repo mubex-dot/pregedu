@@ -2,23 +2,30 @@ import React, { useState } from "react";
 import {
   View,
   StyleSheet,
-  ImageBackground,
+  TextInput,
   TouchableOpacity,
   Text,
-  TextInput,
+  ImageBackground,
 } from "react-native";
 import backgroundImage from "../assets/startpage.jpg";
 
-const StartPage = ({ navigation }) => {
+const RegisterPage = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleRegister = () => {
+    navigation.navigate("Start");
+    // if (password === confirmPassword) {
+    // } else {
+    //     alert("Passwords do not match!");
+    // }
+  };
 
   return (
     <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
       <View style={styles.container}>
-        <Text style={styles.welcomeText}>Welcome</Text>
-        <Text style={styles.subtitleText}>on board</Text>
-
+        <Text style={styles.title}>Register</Text>
         <TextInput
           style={styles.input}
           placeholder="Username"
@@ -36,21 +43,18 @@ const StartPage = ({ navigation }) => {
           onChangeText={setPassword}
         />
 
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Home")}
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>Login</Text>
-          </TouchableOpacity>
+        <TextInput
+          style={styles.input}
+          placeholder="Confirm Password"
+          placeholderTextColor="#ccc"
+          secureTextEntry
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+        />
 
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Register")}
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>Register</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity onPress={handleRegister} style={styles.button}>
+          <Text style={styles.buttonText}>Register</Text>
+        </TouchableOpacity>
       </View>
     </ImageBackground>
   );
@@ -68,12 +72,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
   },
-  welcomeText: {
-    color: "#fff",
-    fontSize: 45,
-  },
-  subtitleText: {
-    fontSize: 25,
+  title: {
+    fontSize: 32,
     color: "#fff",
     marginBottom: 20,
   },
@@ -86,22 +86,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     color: "#fff",
   },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "80%",
-    marginTop: 30,
-  },
   button: {
-    backgroundColor: "#0B3B07",
+    backgroundColor: "#fff",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
+    marginTop: 20,
   },
   buttonText: {
-    color: "#fff",
+    color: "#0B3B07",
     fontSize: 16,
   },
 });
 
-export default StartPage;
+export default RegisterPage;
