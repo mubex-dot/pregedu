@@ -8,15 +8,53 @@ import {
 } from "react-native";
 import Header from "../components/Header";
 
-const FamilyPlanning = ({ navigation }) => {
-  const methods = [
-    { id: 1, name: "Birth Control Pills" },
-    { id: 2, name: "IUD" },
-    { id: 3, name: "Condoms" },
-    { id: 4, name: "Natural Family Planning" },
-    // Add more methods here
-  ];
+// Sample JSON data
+const familyPlanningContent = [
+  {
+    id: 1,
+    title: "1. Me ake nufi da Shirin Iyali?",
+    description:
+      "`Shirin Iyali yana nufin hanyoyin da ma'aurata ke amfani da su domin tsara yawan 'ya'yan da za su haifa, da kuma lokacin da za su haife su. Wannan yana ba su damar kula da lafiyar su, da ta iyalinsu, da kuma samun damar ciyar da 'ya'yansu da kyau.`",
+  },
+  {
+    id: 2,
+    title: "2. Muhimmancin Shirin Iyali",
+    description:
+      "`Kula da Lafiya: Shirin Iyali yana taimakawa wajen kare lafiyar uwa da jariri. Idan mace tana samun hutu tsakanin haihuwa, tana da damar samun lafiya da sauƙi. Inganta Rayuwa: Yawan yara da mutum yake iya kulawa da shi yadda ya kamata yana ƙaruwa ta hanyar Shirin Iyali. Hakan yana taimakawa wajen ciyar da su, tufatar da su, da kuma ba su ilimi mai kyau. Gudanar da Iyali: Ma'aurata suna iya tsara yawan 'ya'yan da suke so, da kuma lokacin da ya dace su sami su.`",
+  },
+  {
+    id: 3,
+    title: "3. Hanyoyin Shirin Iyali",
+    description:
+      "`Kayan Kariyar Ciki (Contraceptives): Kwayoyi (Pills): Ana amfani da kwayoyi domin hana mace daukar ciki. Ana shan su kullum. Allura: Ana yin allura da ke hana mace daukar ciki tsawon wata uku ko fiye. Implants: Wani karamin na'ura ne da ake sanyawa a hannu da ke hana ciki har tsawon shekara biyu zuwa biyar. Kwanduna (Condoms): Ana amfani da su yayin jima'i domin hana ciki da kuma kare kamuwa da cututtuka. Hanyoyin Dabi’a: Fargar Auratayya: Ma'aurata na iya tsayar da jima'i na wani lokaci domin gujewa daukar ciki. Lissafi: Mace tana lissafin kwanakin da take samun haila domin sanin lokacin da zai fi sauki ta dauki ciki, sai su guje wa jima'i a wannan lokacin.`",
+  },
+  {
+    id: 4,
+    title: "4. Tattaunawa da Masani",
+    description:
+      "`Yana da muhimmanci ma'aurata su tattauna da likita ko wani kwararre a fannin kiwon lafiya kafin su fara amfani da wata hanya ta Shirin Iyali. Wannan yana taimakawa wajen sanin wacce hanya ta fi dacewa da su, la'akari da yanayin lafiyarsu.`",
+  },
+  {
+    id: 5,
+    title: "5. Shin Shirin Iyali yana da illa?",
+    description:
+      "`Kamar yadda yake a kowane nau'in magani, hanyoyin Shirin Iyali suna iya samun sakamako masu illa. Amma, mafi yawan lokuta, illolin suna ɗan karami kuma suna raguwa bayan wani lokaci. Dole ne a sanar da likita idan aka fuskanci wata matsala bayan fara amfani da wata hanya.`",
+  },
+  {
+    id: 6,
+    title: "6. Gaskiyar Shirin Iyali",
+    description:
+      "`Shirin Iyali ba yana nufin hana haihuwa gaba ɗaya ba ne, sai dai yana ba da damar tsara lokacin da za a haihu, da kuma rage yawan jarirai masu mutuwa ko haihuwa da matsaloli. Hakanan yana taimakawa wajen samun iyali mai inganci.`",
+  },
+  {
+    id: 7,
+    title: "7. Tambayoyi da Bayani",
+    description:
+      "`Idan kuna son ƙarin bayani ko kuna da wata tambaya, yana da kyau ku tuntubi likitanku ko kuma ku ziyarci cibiyar kiwon lafiya mafi kusa da ku.`",
+  },
+];
 
+const FamilyPlanning = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Header toggleSidebar={() => navigation.goBack()} />
@@ -28,9 +66,10 @@ const FamilyPlanning = ({ navigation }) => {
           their births.
         </Text>
         <Text style={styles.subTitle}>Common Family Planning Methods:</Text>
-        {methods.map((method) => (
-          <TouchableOpacity key={method.id} style={styles.methodItem}>
-            <Text style={styles.methodText}>{method.name}</Text>
+        {familyPlanningContent.map((item) => (
+          <TouchableOpacity key={item.id} style={styles.methodItem}>
+            <Text style={styles.methodText}>{item.title}</Text>
+            <Text style={styles.methodDescription}>{item.description}</Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
@@ -70,6 +109,11 @@ const styles = StyleSheet.create({
   },
   methodText: {
     fontSize: 16,
+    fontWeight: "bold",
+  },
+  methodDescription: {
+    fontSize: 14,
+    marginTop: 5,
   },
 });
 

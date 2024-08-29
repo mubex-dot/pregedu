@@ -10,23 +10,48 @@ import {
   Platform,
 } from "react-native";
 import Header from "../components/Header";
+import { useChatWithBotMutation } from "../store/apiSlice";
 
 const ChatPage = () => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const [chatWithBot, { isLoading }] = useChatWithBotMutation();
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (message.trim()) {
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { id: Date.now().toString(), text: message },
-      ]);
+      const newMessage = {
+        id: Date.now().toString(),
+        text: message,
+        fromUser: true,
+      };
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
       setMessage("");
+
+      try {
+        const response = await chatWithBot({ message }).unwrap();
+        const botReply = {
+          id: Date.now().toString(),
+          text: response.reply,
+          fromUser: false,
+        };
+        setMessages((prevMessages) => [...prevMessages, botReply]);
+      } catch (err) {
+        console.error("Failed to send message:", err);
+        alert("Failed to send message. Please try again.");
+      }
     }
   };
 
   const renderItem = ({ item }) => (
-    <View style={styles.messageContainer}>
+    <View
+      style={[
+        styles.messageContainer,
+        {
+          alignSelf: item.fromUser ? "flex-end" : "flex-start",
+          backgroundColor: item.fromUser ? "#0B3B07" : "#ccc",
+        },
+      ]}
+    >
       <Text style={styles.messageText}>{item.text}</Text>
     </View>
   );
@@ -34,7 +59,7 @@ const ChatPage = () => {
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      // behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <Header toggleSidebar={() => navigation.goBack()} />
       <FlatList
@@ -50,9 +75,16 @@ const ChatPage = () => {
           placeholder="Yi tambaya a nan..."
           value={message}
           onChangeText={setMessage}
+          editable={!isLoading} // Disable input while loading
         />
-        <TouchableOpacity style={styles.sendButton} onPress={sendMessage}>
-          <Text style={styles.sendButtonText}>Send</Text>
+        <TouchableOpacity
+          style={styles.sendButton}
+          onPress={sendMessage}
+          disabled={isLoading} // Disable button while loading
+        >
+          <Text style={styles.sendButtonText}>
+            {isLoading ? "Sending..." : "Send"}
+          </Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -70,11 +102,9 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   messageContainer: {
-    backgroundColor: "#0B3B07",
     borderRadius: 10,
     padding: 10,
     marginBottom: 10,
-    alignSelf: "flex-start",
     maxWidth: "70%",
   },
   messageText: {

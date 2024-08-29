@@ -6,12 +6,28 @@ import {
   TouchableOpacity,
   Text,
   TextInput,
+  Button,
 } from "react-native";
 import backgroundImage from "../assets/startpage.jpg";
+import { useDispatch } from "react-redux";
+import { useLoginUserMutation } from "../store/apiSlice";
+import { setUser } from "../store/userSlice";
 
 const StartPage = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loginUser, { data, error, isLoading }] = useLoginUserMutation();
+  const dispatch = useDispatch();
+
+  const handleLogin = async () => {
+    try {
+      const user = await loginUser({ username, password }).unwrap();
+      dispatch(setUser(user));
+      navigation.navigate("Home");
+    } catch (err) {
+      console.error("Failed to login", err);
+    }
+  };
 
   return (
     <ImageBackground source={backgroundImage} style={styles.backgroundImage}>
@@ -37,12 +53,10 @@ const StartPage = ({ navigation }) => {
         />
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Home")}
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>Login</Text>
+          <TouchableOpacity onPress={handleLogin} style={styles.button}>
+            <Text style={styles.buttonText}>Register</Text>
           </TouchableOpacity>
+          {error && <Text>Error: {error.message}</Text>}
 
           <TouchableOpacity
             onPress={() => navigation.navigate("Register")}

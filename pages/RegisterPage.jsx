@@ -8,18 +8,27 @@ import {
   ImageBackground,
 } from "react-native";
 import backgroundImage from "../assets/startpage.jpg";
+import { useRegisterUserMutation } from "../store/apiSlice";
 
 const RegisterPage = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [registerUser, { data, error, isLoading }] = useRegisterUserMutation();
 
-  const handleRegister = () => {
-    navigation.navigate("Start");
-    // if (password === confirmPassword) {
-    // } else {
-    //     alert("Passwords do not match!");
-    // }
+  const handleRegister = async () => {
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    try {
+      await registerUser({ username, password, role: "user" }).unwrap();
+      navigation.navigate("Start"); // Navigate to Start page after successful registration
+    } catch (err) {
+      console.error("Failed to register", err);
+      alert("Registration failed. Please try again.");
+    }
   };
 
   return (
@@ -52,9 +61,17 @@ const RegisterPage = ({ navigation }) => {
           onChangeText={setConfirmPassword}
         />
 
-        <TouchableOpacity onPress={handleRegister} style={styles.button}>
-          <Text style={styles.buttonText}>Register</Text>
+        <TouchableOpacity
+          onPress={handleRegister}
+          style={styles.button}
+          disabled={isLoading}
+        >
+          <Text style={styles.buttonText}>
+            {isLoading ? "Registering..." : "Register"}
+          </Text>
         </TouchableOpacity>
+
+        {error && <Text style={styles.errorText}>Error: {error.message}</Text>}
       </View>
     </ImageBackground>
   );
@@ -96,6 +113,10 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#0B3B07",
     fontSize: 16,
+  },
+  errorText: {
+    color: "red",
+    marginTop: 10,
   },
 });
 
