@@ -181,7 +181,7 @@ const NutritionalTips = ({ navigation }) => {
         <>
           <Header toggleSidebar={() => navigation.goBack()} />
           <View style={styles.content}>
-            <Text style={styles.title}>Prenatal Care/Kula Da Ciki</Text>
+            <Text style={styles.title}>Nutritional Tips/Shawarwarin Abinci</Text>
           </View>
         </>
       }

@@ -70,7 +70,7 @@ const PostpartumCare = ({ navigation }) => {
     <ScrollView style={styles.container}>
       <Header toggleSidebar={() => navigation.goBack()} />
       <ScrollView style={styles.content}>
-        <Text style={styles.title}>Prenatal Care/Kula Bayan Haihuwa</Text>
+        <Text style={styles.title}>Postpartum Care/Kula Bayan Haihuwa</Text>
         {postPartumCareContent.map((item, index) => (
           <View key={index} style={styles.item}>
             <Text style={styles.itemTitle}>{item.title}</Text>
