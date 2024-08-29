@@ -1,36 +1,54 @@
-import { createSlice } from "@reduxjs/toolkit";
-import * as SecureStore from "expo-secure-store";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  saveToSecureStore,
+  getFromSecureStore,
+  deleteFromSecureStore,
+} from "./secureStorage";
+
+// Thunks for handling async actions
+export const loadUserFromSecureStore = createAsyncThunk(
+  "user/loadUser",
+  async () => {
+    const user = await getFromSecureStore("user");
+    return user ? JSON.parse(user) : null;
+  }
+);
+
+export const logoutUser = createAsyncThunk("user/logoutUser", async () => {
+  await deleteFromSecureStore("user");
+});
 
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    accessToken: null,
-    refreshToken: null,
-    username: null,
+    user: null,
+    loading: false,
+    error: null,
   },
   reducers: {
     setUser: (state, action) => {
-      const { access_token, refresh_token, username } = action.payload;
-      state.accessToken = access_token;
-      state.refreshToken = refresh_token;
-      state.username = username;
-
-      // Save tokens in SecureStore
-      SecureStore.setItemAsync("access_token", access_token);
-      SecureStore.setItemAsync("refresh_token", refresh_token);
+      state.user = action.payload;
+      saveToSecureStore("user", JSON.stringify(action.payload));
     },
-    clearUser: (state) => {
-      state.accessToken = null;
-      state.refreshToken = null;
-      state.username = null;
-
-      // Remove tokens from SecureStore
-      SecureStore.deleteItemAsync("access_token");
-      SecureStore.deleteItemAsync("refresh_token");
-    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(loadUserFromSecureStore.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(loadUserFromSecureStore.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(loadUserFromSecureStore.rejected, (state) => {
+        state.loading = false;
+        state.error = "Failed to load user from SecureStore";
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.user = null;
+      });
   },
 });
 
-export const { setUser, clearUser } = userSlice.actions;
-
+export const { setUser } = userSlice.actions;
 export default userSlice.reducer;

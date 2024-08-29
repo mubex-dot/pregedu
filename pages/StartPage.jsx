@@ -12,6 +12,7 @@ import backgroundImage from "../assets/startpage.jpg";
 import { useDispatch } from "react-redux";
 import { useLoginUserMutation } from "../store/apiSlice";
 import { setUser } from "../store/userSlice";
+import * as SecureStore from "expo-secure-store";
 
 const StartPage = ({ navigation }) => {
   const [username, setUsername] = useState("");
@@ -22,8 +23,9 @@ const StartPage = ({ navigation }) => {
   const handleLogin = async () => {
     try {
       const user = await loginUser({ username, password }).unwrap();
-      dispatch(setUser(user));
-      navigation.navigate("Home");
+      dispatch(setUser({ ...user.data, username })); // Store user data in Redux
+      await SecureStore.setItemAsync("access_token", user.access_token);
+      navigation.navigate("Home"); // Navigate to Home page
     } catch (err) {
       console.error("Failed to login", err);
     }
@@ -54,7 +56,9 @@ const StartPage = ({ navigation }) => {
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={handleLogin} style={styles.button}>
-            <Text style={styles.buttonText}>Register</Text>
+            <Text style={styles.buttonText}>
+              {isLoading ? "Logging in..." : "Login"}
+            </Text>
           </TouchableOpacity>
           {error && <Text>Error: {error.message}</Text>}
 

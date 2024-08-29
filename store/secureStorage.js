@@ -1,4 +1,3 @@
-// secureStorage.js
 import * as SecureStore from "expo-secure-store";
 
 export const saveToSecureStore = async (key, value) => {

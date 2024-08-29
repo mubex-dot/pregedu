@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   TextInput,
@@ -10,12 +10,24 @@ import {
   Platform,
 } from "react-native";
 import Header from "../components/Header";
-import { useChatWithBotMutation } from "../store/apiSlice";
+import { useChatWithBotMutation, useFetchChatQuery } from "../store/apiSlice";
 
 const ChatPage = () => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [chatWithBot, { isLoading }] = useChatWithBotMutation();
+  const [chatWithBot, { isLoading: isSending }] = useChatWithBotMutation();
+  const { data: chatHistory, isLoading: isFetching } = useFetchChatQuery();
+
+  useEffect(() => {
+    if (chatHistory && chatHistory.status === "success") {
+      const initialMessages = chatHistory.data.map((msg) => ({
+        id: msg.id.toString(),
+        text: msg.response,
+        fromUser: false,
+      }));
+      setMessages(initialMessages);
+    }
+  }, [chatHistory]);
 
   const sendMessage = async () => {
     if (message.trim()) {
@@ -29,9 +41,10 @@ const ChatPage = () => {
 
       try {
         const response = await chatWithBot({ message }).unwrap();
+
         const botReply = {
           id: Date.now().toString(),
-          text: response.reply,
+          text: response.data.response,
           fromUser: false,
         };
         setMessages((prevMessages) => [...prevMessages, botReply]);
@@ -48,7 +61,7 @@ const ChatPage = () => {
         styles.messageContainer,
         {
           alignSelf: item.fromUser ? "flex-end" : "flex-start",
-          backgroundColor: item.fromUser ? "#0B3B07" : "#ccc",
+          backgroundColor: item.fromUser ? "#0B3B07" : "#808080",
         },
       ]}
     >
@@ -59,7 +72,7 @@ const ChatPage = () => {
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      // behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <Header toggleSidebar={() => navigation.goBack()} />
       <FlatList
@@ -75,15 +88,15 @@ const ChatPage = () => {
           placeholder="Yi tambaya a nan..."
           value={message}
           onChangeText={setMessage}
-          editable={!isLoading} // Disable input while loading
+          editable={!isSending}
         />
         <TouchableOpacity
           style={styles.sendButton}
           onPress={sendMessage}
-          disabled={isLoading} // Disable button while loading
+          disabled={isSending}
         >
           <Text style={styles.sendButtonText}>
-            {isLoading ? "Sending..." : "Send"}
+            {isSending ? "Sending..." : "Send"}
           </Text>
         </TouchableOpacity>
       </View>

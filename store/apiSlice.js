@@ -1,9 +1,17 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import * as SecureStore from "expo-secure-store";
 
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl: "https://outgoing-flowing-ladybird.ngrok-free.app",
+    prepareHeaders: async (headers) => {
+      const token = await SecureStore.getItemAsync("access_token");
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
   }),
   endpoints: (builder) => ({
     registerUser: builder.mutation({
@@ -28,6 +36,12 @@ export const apiSlice = createApi({
         body: body,
       }),
     }),
+    fetchChat: builder.query({
+      query: () => ({
+        url: "/chat",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -35,4 +49,5 @@ export const {
   useRegisterUserMutation,
   useLoginUserMutation,
   useChatWithBotMutation,
+  useFetchChatQuery,
 } = apiSlice;
