@@ -1,6 +1,9 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
 import Header from "../components/Header";
+import pre1 from "../assets/prenatal.jpg";
+import pre2 from "../assets/prenatal2.jpeg.jpg";
+import pre3 from "../assets/pre3.jpeg.jpg";
 
 const PrenatalCare = ({ navigation }) => {
   const prenatalCareContent = [
@@ -9,6 +12,7 @@ const PrenatalCare = ({ navigation }) => {
       title: "1. Menene Kulawar Cikin-Gida?",
       description: `Kulawar cikin-gida tana nufin ziyara a asibiti don dubawa da gwaje-gwaje a lokacin da mace ke dauke da juna biyu. Haka kuma, yana ba da shawara akan abinci, motsa jiki, da kuma zaɓuɓɓukan rayuwa don tabbatar da lafiyar uwa da jariri.
       `,
+      image: pre1,
     },
     {
       id: 2,
@@ -21,6 +25,7 @@ const PrenatalCare = ({ navigation }) => {
       title: "3. Manyan Bangarori na Kulawar Cikin-Gida",
       description: `A. Farko (Makonni 1-12)\nZiyara ta Farko:Tabbatar da ciki ta hanyar gwajin fitsari ko na jini.Lissafin lokacin haihuwa bisa ga lokacin karshe na haila ko amfani da na'ura mai duba ciki (ultrasound).Binciken tarihin likita, ciki har da ciki na baya, tarihin lafiya na iyali, da kuma abubuwan da ke rayuwa.Gwajin jini don duba cututtuka kamar su rashin jini (anemia), irin jini, da wasu cututtuka masu yaduwa.Tattaunawa akan sinadaran gina jiki na ciki (prenatal vitamins), musamman folic acid, don hana matsaloli a kwakwalwa da kashin baya.\n\nZiyarar Biyu da Ta Biyo Baya:Kula da nauyi, matsa jini, da fitsari.Gwaje-gwaje don wasu cututtuka (misali, Down syndrome).\n\nB. Na Biyu (Makonni 13-26)\nDubawa Akai-akai:Ci gaba da duba nauyi, matsa jini, da fitsari.Auna girman jariri da saurin zuciyarsa.Amfani da na'ura mai duba ciki (ultrasound) a makonni 18-22 don duba cigaban jariri da gano jinsinsa idan ana so.\n\nGwaje-gwaje:Gwajin rashin jini (anemia) da sauran cututtuka.Shawara akan Lafiya da Rayuwa:Abinci mai gina jiki, motsa jiki, da magance wasu matsaloli kamar ciwon baya da ciwon zuciya.Shiryawa don haihuwa da alamun fara haihuwa.\n\nC. Na Uku (Makonni 27-40)\nZiyarar Akai-akai:Duba matsayin jariri da girman sa.Tattaunawa akan alamun haihuwa da shirin haihuwa.Gwajin cututtuka kamar su Group B Streptococcus (GBS).Tattaunawa akan kulawar bayan haihuwa da shayarwa.\n\nKulawa na Musamman:Maganin matsaloli kamar su hawan jini na ciki (preeclampsia) ko haihuwar kafin lokaci.Shiryawa don haihuwa, da tattaunawa akan maganin ciwo da shirin haihuwa.
       `,
+      image: pre2,
     },
     {
       id: 4,
@@ -45,6 +50,7 @@ const PrenatalCare = ({ navigation }) => {
       title: "7. Shiryawa Don Haihuwa",
       description: `Kirkirar shirin haihuwa, tattaunawa akan zaɓuɓɓukan maganin ciwo, da zaɓar hanyar haihuwa.Sani akan alamun fara haihuwa da lokacin zuwa asibiti ko wurin haihuwa.
       `,
+      image: pre3,
     },
     {
       id: 8,
@@ -75,6 +81,7 @@ const PrenatalCare = ({ navigation }) => {
           <View key={index} style={styles.item}>
             <Text style={styles.itemTitle}>{item.title}</Text>
             <Text style={styles.itemDescription}>{item.description}</Text>
+            {item.image && <Image source={item.image} style={styles.image} />}
           </View>
         ))}
       </ScrollView>
@@ -106,6 +113,12 @@ const styles = StyleSheet.create({
   itemDescription: {
     fontSize: 16,
     lineHeight: 22,
+  },
+  image: {
+    width: "100%",
+    height: 200,
+    marginTop: 10,
+    borderRadius: 10,
   },
 });
 

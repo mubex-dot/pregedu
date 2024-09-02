@@ -1,6 +1,10 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
 import Header from "../components/Header";
+import post1 from "../assets/post.jpeg.jpg";
+import post2 from "../assets/post2.jpeg.jpg";
+import post3 from "../assets/post3.jpeg.jpg";
+import post4 from "../assets/post4.jpeg.jpg";
 
 const PostpartumCare = ({ navigation }) => {
   const postPartumCareContent = [
@@ -9,24 +13,28 @@ const PostpartumCare = ({ navigation }) => {
       title: "1. Kula da Lafiyar Jiki",
       description:
         "`Gyaran Haihuwa ta Hanyar Farji: Kulawa da Perineal don maganin rashin jin dadi, zubar jini (lochia), da karkatar da mahaifa. Gyaran Haihuwa ta Hanyar Cesarean: Kula da yankin yankin, rage aiki mai nauyi, da aiki jiki. Kula da Nono: Shayarwa, ciyarwa da kwalba, da kula da nono. Lafiyar Farji: Ayyukan Kegel don ƙarfafa tsokokin farji.`",
+      image: post1,
     },
     {
       id: 2,
       title: "2. Jin Daɗin Lafiya da Na Zuciya",
       description:
         "`Damuwar Uwa: Canjin yanayi, kuka, da rashin bacci. Ciwon Zuciya na Bayan Haihuwa: Alamomi masu tsanani da ke buƙatar kulawa ta likita. Damuwa na Bayan Haihuwa: Alamomin damuwa da tsoro. Tsarin Taimako: Muhimmancin samun tsarin taimako daga iyali, abokai, da likitoci.`",
+      image: post3,
     },
     {
       id: 3,
       title: "3. Abinci da Shaƙuwa",
       description:
         "`Abincin Daidaitacce: Abinci mai gina jiki don dawowa da samar da nono. Shaƙuwa: Yin shaƙuwa sosai musamman ga mata masu shayarwa.`",
+      image: post4,
     },
     {
       id: 4,
       title: "4. Hutawa da Barci",
       description:
         "`Barci Lokacin Da Jariri Ke Barci: Daidaita tsarin barci na uwa da jariri. Taimako da Kula da Jariri: Karɓar taimako daga iyali don samun hutu mai kyau.`",
+      image: post2,
     },
     {
       id: 5,
@@ -75,6 +83,7 @@ const PostpartumCare = ({ navigation }) => {
           <View key={index} style={styles.item}>
             <Text style={styles.itemTitle}>{item.title}</Text>
             <Text style={styles.itemDescription}>{item.description}</Text>
+            {item.image && <Image source={item.image} style={styles.image} />}
           </View>
         ))}
       </ScrollView>
@@ -96,12 +105,18 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   item: {
-    // marginBottom: 20,
+    marginBottom: 20,
   },
   itemTitle: {
     fontSize: 21,
     fontWeight: "bold",
     marginBottom: 5,
+  },
+  image: {
+    width: "100%",
+    height: 200,
+    marginTop: 10,
+    borderRadius: 10,
   },
   itemDescription: {
     fontSize: 16,

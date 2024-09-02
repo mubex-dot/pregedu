@@ -1,13 +1,14 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, StyleSheet, FlatList, Image } from "react-native";
 import Header from "../components/Header";
-import { ScrollView } from "react-native-web";
+import nut1 from "../assets/nut1.jpeg.jpg";
+import nut2 from "../assets/nut2.png";
+import nut3 from "../assets/nut3.jpg";
+import calcium from "../assets/Calcium.webp";
+import vitaminD from "../assets/vitamin-d-food.webp";
+import omega from "../assets/omega-fatty-acid.jpeg.jpg";
+import protein from "../assets/protein.jpeg.jpg";
+import vitamin from "../assets/vitamin.jpg";
 
 const nutritionalTipsContent = [
   {
@@ -20,29 +21,34 @@ const nutritionalTipsContent = [
         title: "Folic Acid",
         description:
           "Yana da mahimmanci don hana cututtuka na neural tube. Nemi kashi 400-600 micrograms a kowace rana.",
+        image: nut2,
       },
       {
         id: "1.2",
         title: "Iron",
         description:
           "Yana taimakawa wajen kara yawan jinin da kuma safarar oxygen. Nemi kimanin 27 mg a kowace rana.",
+        image: nut3,
       },
       {
         id: "1.3",
         title: "Calcium",
         description:
           "Yana da mahimmanci don bunkasa kasusuwa da haƙoran jariri. Mata masu ciki suna bukatar kimanin 1,000 mg a kowace rana.",
+        image: calcium,
       },
       {
         id: "1.4",
         title: "Vitamin D",
         description: "Yana taimakawa wajen shan calcium da aikin garkuwa.",
+        image: vitaminD,
       },
       {
         id: "1.5",
         title: "Protein",
         description:
           "Yana taimakawa wajen bunkasa ƙwayoyin jiki na jariri, har da kwakwalwa. Nemi akalla 70 grams a kowace rana.",
+        image: protein,
       },
     ],
     tips: [
@@ -61,23 +67,27 @@ const nutritionalTipsContent = [
         title: "Iron da Calcium",
         description:
           "Sun kasance masu muhimmanci yayin da kasusuwa na jariri suke bunƙasa.",
+        image: calcium,
       },
       {
         id: "2.2",
         title: "Vitamin A",
         description:
           "Yana taimakawa wajen bunkasa idanu da garkuwar jiki na jariri. Kada a wuce 770 micrograms na retinol a kowace rana.",
+        image: vitamin,
       },
       {
         id: "2.3",
         title: "Omega-3 Fatty Acids",
         description: "Yana da muhimmanci don bunkasa kwakwalwa da idanu.",
+        image: omega,
       },
       {
         id: "2.4",
         title: "Fiber",
         description:
           "Yana taimakawa wajen hana tsayuwar bayan gida, matsala da aka saba da ita yayin daukar ciki.",
+        image: nut3,
       },
     ],
     tips: [
@@ -96,23 +106,27 @@ const nutritionalTipsContent = [
         title: "Iron",
         description:
           "Bukatuwa na ƙaruwa don tallafawa jinin da jariri yake samu.",
+        image: nut3,
       },
       {
         id: "3.2",
         title: "Calcium da Vitamin D",
         description: "Suna ci gaba da tallafawa bunkasar kasusuwa.",
+        image: calcium,
       },
       {
         id: "3.3",
         title: "Vitamin C",
         description:
           "Yana taimakawa wajen shan iron da tallafawa garkuwar jiki.",
+        image: vitaminD,
       },
       {
         id: "3.4",
         title: "B Vitamins",
         description:
           "Mahimmanci don samar da kuzari da bunkasar ƙwayoyin jiki.",
+        image: vitamin,
       },
       {
         id: "3.5",
@@ -151,6 +165,7 @@ const nutritionalTipsContent = [
     tips: [
       "Tuntuɓi likitan ki don shawarwari na musamman game da abinci yayin daukar ciki, domin bukatun kowa na iya bambanta.",
     ],
+    image: vitamin,
   },
 ];
 
@@ -163,6 +178,9 @@ const NutritionalTips = ({ navigation }) => {
         <View key={subItem.id} style={styles.item}>
           <Text style={styles.itemTitle}>{subItem.title}</Text>
           <Text style={styles.itemDescription}>{subItem.description}</Text>
+          {subItem.image && (
+            <Image source={subItem.image} style={styles.image} />
+          )}
         </View>
       ))}
       <View style={styles.tipsContainer}>
@@ -171,6 +189,7 @@ const NutritionalTips = ({ navigation }) => {
             {tip}
           </Text>
         ))}
+        {item.image && <Image source={item.image} style={styles.image} />}
       </View>
     </View>
   );
@@ -181,7 +200,9 @@ const NutritionalTips = ({ navigation }) => {
         <>
           <Header toggleSidebar={() => navigation.goBack()} />
           <View style={styles.content}>
-            <Text style={styles.title}>Nutritional Tips/Shawarwarin Abinci</Text>
+            <Text style={styles.title}>
+              Nutritional Tips/Shawarwarin Abinci
+            </Text>
           </View>
         </>
       }
@@ -228,6 +249,12 @@ const styles = StyleSheet.create({
   },
   itemDescription: {
     fontSize: 14,
+  },
+  image: {
+    width: "100%",
+    height: 200,
+    marginTop: 10,
+    borderRadius: 10,
   },
   tipsContainer: {
     marginTop: 10,

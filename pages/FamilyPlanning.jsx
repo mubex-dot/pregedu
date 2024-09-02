@@ -5,10 +5,14 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import Header from "../components/Header";
+import fplanning1 from "../assets/fam.jpeg.jpg";
+import fplanning2 from "../assets/fam2.jpeg.jpg";
+import fplanning3 from "../assets/fam-2.jpeg.jpg";
+import fplanning4 from "../assets/fam3.jpeg.jpg";
 
-// Sample JSON data
 const familyPlanningContent = [
   {
     id: 1,
@@ -27,24 +31,28 @@ const familyPlanningContent = [
     title: "3. Hanyoyin Shirin Iyali",
     description:
       "`Kayan Kariyar Ciki (Contraceptives): Kwayoyi (Pills): Ana amfani da kwayoyi domin hana mace daukar ciki. Ana shan su kullum. Allura: Ana yin allura da ke hana mace daukar ciki tsawon wata uku ko fiye. Implants: Wani karamin na'ura ne da ake sanyawa a hannu da ke hana ciki har tsawon shekara biyu zuwa biyar. Kwanduna (Condoms): Ana amfani da su yayin jima'i domin hana ciki da kuma kare kamuwa da cututtuka. Hanyoyin Dabi’a: Fargar Auratayya: Ma'aurata na iya tsayar da jima'i na wani lokaci domin gujewa daukar ciki. Lissafi: Mace tana lissafin kwanakin da take samun haila domin sanin lokacin da zai fi sauki ta dauki ciki, sai su guje wa jima'i a wannan lokacin.`",
+    image: fplanning1,
   },
   {
     id: 4,
     title: "4. Tattaunawa da Masani",
     description:
       "`Yana da muhimmanci ma'aurata su tattauna da likita ko wani kwararre a fannin kiwon lafiya kafin su fara amfani da wata hanya ta Shirin Iyali. Wannan yana taimakawa wajen sanin wacce hanya ta fi dacewa da su, la'akari da yanayin lafiyarsu.`",
+    image: fplanning2,
   },
   {
     id: 5,
     title: "5. Shin Shirin Iyali yana da illa?",
     description:
       "`Kamar yadda yake a kowane nau'in magani, hanyoyin Shirin Iyali suna iya samun sakamako masu illa. Amma, mafi yawan lokuta, illolin suna ɗan karami kuma suna raguwa bayan wani lokaci. Dole ne a sanar da likita idan aka fuskanci wata matsala bayan fara amfani da wata hanya.`",
+    image: fplanning3,
   },
   {
     id: 6,
     title: "6. Gaskiyar Shirin Iyali",
     description:
       "`Shirin Iyali ba yana nufin hana haihuwa gaba ɗaya ba ne, sai dai yana ba da damar tsara lokacin da za a haihu, da kuma rage yawan jarirai masu mutuwa ko haihuwa da matsaloli. Hakanan yana taimakawa wajen samun iyali mai inganci.`",
+    image: fplanning4,
   },
   {
     id: 7,
@@ -59,18 +67,18 @@ const FamilyPlanning = ({ navigation }) => {
     <View style={styles.container}>
       <Header toggleSidebar={() => navigation.goBack()} />
       <ScrollView style={styles.content}>
-        <Text style={styles.title}>Family Planning</Text>
+        <Text style={styles.title}>Family Planning/Tsarin Iyali</Text>
         <Text style={styles.paragraph}>
-          Family planning allows individuals and couples to anticipate and
-          attain their desired number of children and the spacing and timing of
-          their births.
+          Shirin iyali yana ba wa mutane da ma'aurata damar hasashen da cimma
+          yawan yaran da suke so da kuma tsarawa da lokacin haihuwar su.
         </Text>
-        <Text style={styles.subTitle}>Common Family Planning Methods:</Text>
+        {/* <Text style={styles.subTitle}>Common Family Planning Methods:</Text> */}
         {familyPlanningContent.map((item) => (
-          <TouchableOpacity key={item.id} style={styles.methodItem}>
+          <View key={item.id} style={styles.methodItem}>
             <Text style={styles.methodText}>{item.title}</Text>
             <Text style={styles.methodDescription}>{item.description}</Text>
-          </TouchableOpacity>
+            {item.image && <Image source={item.image} style={styles.image} />}
+          </View>
         ))}
       </ScrollView>
     </View>
@@ -84,6 +92,7 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 20,
+    marginBottom: 20,
   },
   title: {
     fontSize: 24,
@@ -102,14 +111,20 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   methodItem: {
-    backgroundColor: "#fff",
-    padding: 15,
+    // backgroundColor: "#fff",
+    // padding: 15,
     borderRadius: 10,
-    marginBottom: 10,
+    marginBottom: 20,
   },
   methodText: {
     fontSize: 16,
     fontWeight: "bold",
+  },
+  image: {
+    width: "100%",
+    height: 200,
+    marginTop: 10,
+    borderRadius: 10,
   },
   methodDescription: {
     fontSize: 14,
